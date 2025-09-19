@@ -41,7 +41,7 @@ Desenvolvido após **6 anos de estudo** em programação Android, Kernel Linux, 
 ```bash
 # Atualize os repositórios
 pkg update && pkg upgrade -y
-pkg install android-tools
+pkg install android-tools wget -y
 
 ```
 ### 3. Conectar via WIFI
@@ -56,9 +56,10 @@ adb devices
 ```
 ### 4. Baixar e Instalar MTS_SENSI.sh
 ```bash
-# Clone o repositório
-git clone  https://github.com/Matheus01DEV/MTS_SENSI.git
-
+# Baixe o Script
+wget https://github.com/Matheusdudev/Sensibilidade.zip
+#Descompacte
+unzip Sensibilidade.zip
 # Entre na pasta
 cd Sensibilidade
 
