@@ -74,7 +74,8 @@ if [ -z "$xdpi" ]; then
     exit 1
 fi
 
-xdpi_int=$(printf "%.0f" "$xdpi")
+xdpi_int=$(LC_NUMERIC=C printf "%.0f" "$xdpi")
+
 
 # Animação de carregamento com aplicação das configurações
 loading_animation &
