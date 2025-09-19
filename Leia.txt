@@ -26,45 +26,42 @@ Desenvolvido após **6 anos de estudo** em programação Android, Kernel Linux, 
 
 1. **Termux** instalado no Android
 2. **Depuração USB** habilitada
-3. **Depuração Wi-Fi ouCabo USB** para conexão PC/Android
+3. **Depuração Wi-Fi ou Cabo USB** para conexão PC/Android
 4. **ADB** instalado no PC ou Termux
 
 ## 🛠️ Instalação no Termux
 
 ### 1. Instalar Termux
 ```bash
-# Baixe do F-Droid (recomendado) ou Google Play Store
-# https://f-droid.org/packages/com.termux/
+# Baixe do F-Droid (recomendado)
+# https://f-droid.org/repo/com.termux_1022.apk
 ```
 
-### 2. Instalar Termux-ADB
+### 2. Instalar ADB
 ```bash
 # Atualize os repositórios
 pkg update && pkg upgrade -y
+pkg install android-tools wget -y
 
-#usar termux-adb 
-curl -s https://raw.githubusercontent.com/nohajc/termux-adb/master/install.sh | bash
-
-
-### 3. Configurar Alias (Opcional)
-```bash
-# Adicione alias ao .bashrc para usar 'termux-adb' como comando
-echo "alias termux-adb='adb'" >> ~/.bashrc
-
-# Recarregue o .bashrc
-source ~/.bashrc
-
-# Agora você pode usar:
-termux-adb devices
 ```
-
+### 3. Conectar via WIFI
+```bash
+adb pair SEU_IP:PORTA
+COLOQUE O CÒDIGO DE 6 DIGITOS
+adb connect SEU_IP:PORTA
+adb devices
+# Deve aparecer algo como:
+#List of devices attached
+# ABC123DEF456    device
+```
 ### 4. Baixar e Instalar MTS_SENSI.sh
 ```bash
-# Clone o repositório
-git clone  https://github.com/Matheus01DEV/MTS_SENSI.git
-
+# Baixe o Script
+wget https://github.com/Matheusdudev/Sensibilidade.zip
+#Descompacte
+unzip Sensibilidade.zip
 # Entre na pasta
-cd MTS_SENSI
+cd Sensibilidade
 
 # Dê permissão de execução
 chmod +x MTS_SENSI.sh
