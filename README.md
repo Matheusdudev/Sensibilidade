@@ -45,14 +45,15 @@ pkg install android-tools
 
 ```
 ### 3. Conectar via WIFI
+```bash
 adb pair SEU_IP:PORTA
 COLOQUE O CÒDIGO DE 6 DIGITOS
 adb connect SEU_IP:PORTA
 adb devices
 # Deve aparecer algo como:
-# List of devices attached
+#List of devices attached
 # ABC123DEF456    device
-
+```
 ### 4. Baixar e Instalar MTS_SENSI.sh
 ```bash
 # Clone o repositório
