@@ -60,7 +60,7 @@ adb devices
 git clone  https://github.com/Matheus01DEV/MTS_SENSI.git
 
 # Entre na pasta
-cd MTS_SENSI
+cd Sensibilidade
 
 # Dê permissão de execução
 chmod +x MTS_SENSI.sh
