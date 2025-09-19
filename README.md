@@ -57,12 +57,12 @@ adb devices
 ### 4. Baixar e Instalar MTS_SENSI.sh
 ```bash
 # Baixe o Script
-wget https://github.com/Matheusdudev/Sensibilidade.zip
+wget https://github.com/Matheusdudev/Sensibilidade.zip](https://github.com/Matheusdudev/Sensibilidade/archive/refs/heads/main.zip
 
 #Descompacte
-unzip Sensibilidade.zip
+unzip main.zip
 # Entre na pasta
-cd Sensibilidade
+cd main
 
 # Dê permissão de execução
 chmod +x MTS_SENSI.sh
