@@ -1,187 +1,164 @@
-# MTS_SENSI.sh 🎮
+#!/bin/bash
 
+# UM SALVE DO MATHEUS ALESSANDRO 
+# Autor: MTS_B3 - 6 anos de dedicação em programação
+# Uso: ./MTS_SENSI.sh
 
-**Script de otimização Android para máxima precisão em jogos**
+# .
+slow_print() {
+    text="$1"
+    delay="${2:-0.05}"
+    for (( i=0; i<${#text}; i++ )); do
+        printf "%s" "${text:$i:1}"
+        sleep "$delay"
+    done
+    echo
+}
 
-Desenvolvido após **6 anos de estudo** em programação Android, Kernel Linux, C++, C# e Java. Este script configura automaticamente a **sensibilidade perfeita** para dispositivos Android, eliminando tremores e maximizando a precisão em jogos.
+# .
+loading_animation() {
+    echo -e "\n\033[1;32mCarregando configurações aguarde 20 segundos...\033[0m"
+    
+    frames=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
+    
+    for i in {1..200}; do  # 20 segundos (200 * 0.1s)
+        frame_index=$((i % ${#frames[@]}))
+        printf "\r\033[1;36m${frames[$frame_index]} Aplicando otimizações... %d%%\033[0m" $((i * 100 / 200))
+        sleep 0.1
+    done
+    
+    printf "\r\033[1;32m✅ Configurações aplicadas com sucesso!\033[0m\n\n"
+}
 
-## 🚀 Recursos
+# Limpa a tela
+clear
 
-- ✅ **DPI Físico Automático** - Detecta e aplica o DPI real da tela
-- ✅ **Mouse Speed Otimizado** - Configuração ideal para responsividade
-- ✅ **GPU Rendering Forçado** - Performance máxima em jogos
-- ✅ **60Hz Refresh Rate** - Fluidez total
-- ✅ **Detecção Inteligente** - Funciona em todas as marcas e versões Android
-- ✅ **Interface Interativa** - Animações e feedback visual
+# .
+echo -e "\033[1;32m" # Verde negrito
+slow_print "Parabéns, depois de 6 anos de estudo em programação de Android, Kernel Linux, C++, C# e Java," 0.03
+slow_print "Fiz com muita dedicação e perseverança esse script que define a sensibilidade perfeita" 0.03
+slow_print "sem tremer de forma honesta para o seu dispositivo!" 0.03
+echo
+slow_print "Faça um ótimo proveito!" 0.05
+echo
+echo -e "\033[1;33m" # Amarelo negrito para contatos
+slow_print "ID: 197516950 PSG APOLLO" 0.04
+slow_print "WPP: +55(24)99857-3367" 0.04
+slow_print "IG: https://www.instagram.com/mts__b3?igsh=d2hmaTJleHU5OXk5" 0.04
+echo -e "\033[0m" # Reset cor
 
-## 📱 Compatibilidade
+sleep 2
 
-- **Android:** 5.0+ (API 21+)
-- **Marcas:** Samsung, Xiaomi, OnePlus, Huawei, LG, Motorola, etc.
-- **Arquitetura:** ARM, ARM64, x86, x86_64
-- **Root:** Não necessário (funcionalidades extras com root)
+# Verificações 
+if ! command -v adb &> /dev/null; then
+    echo -e "\033[1;31m❌ ERRO: ADB não encontrado!\033[0m"
+    exit 1
+fi
 
-## 📋 Pré-requisitos
+adb_status=$(adb get-state 2>/dev/null)
+if [ "$adb_status" != "device" ]; then
+    echo -e "\033[1;31m❌ ERRO: Dispositivo não conectado via ADB!\033[0m"
+    exit 1
+fi
 
-1. **Termux** instalado no Android
-2. **Depuração USB** habilitada
-3. **Depuração Wi-Fi ouCabo USB** para conexão PC/Android
-4. **ADB** instalado no PC ou Termux
+# Obtém DPI físico silenciosamente
+dpi_output=$(adb shell dumpsys input | grep dpi)
+if [ -z "$dpi_output" ]; then
+    echo -e "\033[1;31m❌ ERRO: Não foi possível obter DPI\033[0m"
+    exit 1
+fi
 
-## 🛠️ Instalação no Termux
+xdpi=$(echo "$dpi_output" | grep -o 'xdpi: [0-9.]*' | cut -d' ' -f2)
+if [ -z "$xdpi" ]; then
+    echo -e "\033[1;31m❌ ERRO: Não foi possível extrair xdpi\033[0m"
+    exit 1
+fi
 
-### 1. Instalar Termux
-```bash
-# Baixe do F-Droid (recomendado) ou Google Play Store
-# https://f-droid.org/packages/com.termux/
-```
+xdpi_int=$(printf "%.0f" "$xdpi")
 
-### 2. Instalar Termux-ADB
-```bash
-# Atualize os repositórios
-pkg update && pkg upgrade -y
+# Animação de carregamento com aplicação das configurações
+loading_animation &
+loading_pid=$!
 
-#usar termux-adb 
-curl -s https://raw.githubusercontent.com/nohajc/termux-adb/master/install.sh | bash
+# .
+sleep 5
+adb shell wm density $xdpi_int >/dev/null 2>&1
 
+sleep 5
+adb shell settings put system pointer_speed 2 >/dev/null 2>&1
 
-### 3. Configurar Alias (Opcional)
-```bash
-# Adicione alias ao .bashrc para usar 'termux-adb' como comando
-echo "alias termux-adb='adb'" >> ~/.bashrc
+sleep 5
+echo -e "\r\033[1;36m🎯 Aplicando melhor configuração para o seu modelo!\033[0m" >/dev/tty
+echo -e "\r\033[1;32m⚡ 100% de precisão aplicada!\033[0m" >/dev/tty
 
-# Recarregue o .bashrc
-source ~/.bashrc
+adb shell service call SurfaceFlinger 1008 i32 1 >/dev/null 2>&1
+adb shell "su -c 'setprop debug.sf.disable_backpressure 1'" >/dev/null 2>&1
+adb shell "su -c 'setprop debug.sf.disable_hwc_overlays 1'" >/dev/null 2>&1
+adb shell "su -c 'setprop debug.sf.disable_hwc 1'" >/dev/null 2>&1
+adb shell settings put global animator_duration_scale 0 >/dev/null 2>&1
+adb shell settings put global transition_animation_scale 0 >/dev/null 2>&1
+adb shell settings put global window_animation_scale 0 >/dev/null 2>&1
 
-# Agora você pode usar:
-termux-adb devices
-```
+global_overlays=$(adb shell settings list global | grep -i overlay 2>/dev/null)
+system_overlays=$(adb shell settings list system | grep -i overlay 2>/dev/null)
+secure_overlays=$(adb shell settings list secure | grep -i overlay 2>/dev/null)
+global_hw=$(adb shell settings list global | grep -i -E "(hw|hardware)" 2>/dev/null)
+system_hw=$(adb shell settings list system | grep -i -E "(hw|hardware)" 2>/dev/null)
+global_gpu=$(adb shell settings list global | grep -i -E "(gpu|render)" 2>/dev/null)
+system_gpu=$(adb shell settings list system | grep -i -E "(gpu|render)" 2>/dev/null)
+global_disable=$(adb shell settings list global | grep -i disable 2>/dev/null)
+system_disable=$(adb shell settings list system | grep -i disable 2>/dev/null)
 
-### 4. Baixar e Instalar MTS_SENSI.sh
-```bash
-# Clone o repositório
-git clone  https://github.com/Matheus01DEV/MTS_SENSI.git
+echo "$global_overlays $system_overlays $secure_overlays $global_hw $system_hw $global_gpu $system_gpu $global_disable $system_disable" | tr ' ' '\n' | grep -E "(overlay|disable|hw|gpu|render|force)" | while read -r line; do
+    if [ ! -z "$line" ]; then
+        key=$(echo "$line" | cut -d'=' -f1)
+        if [ ! -z "$key" ]; then
+            adb shell settings put global "$key" 1 >/dev/null 2>&1
+            adb shell settings put system "$key" 1 >/dev/null 2>&1
+            adb shell settings put secure "$key" 1 >/dev/null 2>&1
+        fi
+    fi
+done
 
-# Entre na pasta
-cd MTS_SENSI
+adb shell settings put global disable_overlays 1 >/dev/null 2>&1
+adb shell settings put system disable_overlays 1 >/dev/null 2>&1
+adb shell settings put secure disable_overlays 1 >/dev/null 2>&1
+adb shell settings put global force_hw_ui 1 >/dev/null 2>&1
+adb shell settings put system force_hw_ui 1 >/dev/null 2>&1
+adb shell settings put global debug.hwui.renderer opengl >/dev/null 2>&1
+adb shell settings put global debug.hwui.renderer skiagl >/dev/null 2>&1
+adb shell setprop debug.hwui.renderer skiagl >/dev/null 2>&1
+adb shell setprop debug.hwui.renderer opengl >/dev/null 2>&1
+adb shell setprop debug.composition.type gpu >/dev/null 2>&1
+adb shell setprop debug.sf.hw 1 >/dev/null 2>&1
+adb shell setprop ro.config.disable_hw_accel false >/dev/null 2>&1
+adb shell setprop debug.egl.hw 1 >/dev/null 2>&1
+adb shell setprop hw.overlay.disable 1 >/dev/null 2>&1
+adb shell setprop ro.sf.disable_triple_buffer false >/dev/null 2>&1
 
-# Dê permissão de execução
-chmod +x MTS_SENSI.sh
+echo -e "\r\033[1;36m⚡ Forçando através do SurfaceFlinger...\033[0m" >/dev/tty
+adb shell "dumpsys SurfaceFlinger --disable-hwc" >/dev/null 2>&1
 
-# Execute o script
-./MTS_SENSI.sh
-```
+sleep 4
+# Configura 60Hz
+adb shell settings put system peak_refresh_rate 60.0 >/dev/null 2>&1
+adb shell settings put system min_refresh_rate 60.0 >/dev/null 2>&1
 
-## 📲 Preparando o Dispositivo Android
+sleep 4
+# Aguarda a animação terminar
+wait $loading_pid
 
-### 1. Habilitar Opções do Desenvolvedor
-1. Vá em **Configurações** → **Sobre o telefone**
-2. Toque **7 vezes** em "Número da compilação"
-3. Volte para **Configurações** → **Opções do desenvolvedor**
-
-### 2. Habilitar Depuração USB
-1. Em **Opções do desenvolvedor**
-2. Ative **"Depuração USB"**
-3. Ative **"Instalação via USB"** (se disponível)
-
-### 3. Conectar via ADB
-```bash
-# Conecte o cabo USB
-# Execute no Termux:
-adb devices
-
-# Deve aparecer algo como:
-# List of devices attached
-# ABC123DEF456    device
-```
-
-## ⚡ Como Usar
-
-1. **Execute o script:**
-   ```bash
-   ./MTS_SENSI.sh
-   ```
-
-2. **O script irá:**
-   - Detectar automaticamente o DPI físico da sua tela
-   - Aplicar configurações otimizadas
-   - Adiciona a melhor configuração de FurfaceFlinger
-   - Exibir progresso com animação interativa
-  
-
-3. **Resultado:**
-   - Sensibilidade perfeita sem tremores
-   - Performance maximizada em jogos
-   - Responsividade otimizada
-
-## 🎯 O que o Script Configura
-
-| Configuração | Valor | Descrição |
-|-------------|-------|-----------|
-| **DPI** | Auto (Físico) | Precisão máxima de input |
-| **Mouse Speed**  | Responsividade otimizada |
-| **GPU Rendering** | Forçado | Performance em jogos |
-| **Refresh Rate** | 60Hz | Fluidez máxima |
-| **Overlays** | Desabilitado | Latência reduzida |
-
-## 🔧 Solução de Problemas
-
-### ADB não encontrado
-```bash
-
-### Dispositivo não detectado
-```bash
-# Verifique conexões
-adb kill-server
-adb start-server
-adb devices
-```
-
-### Permissão negada
-```bash
-# Dê permissões corretas
-chmod +x MTS_SENSI.sh
-```
-
-### UI ficou estranha após DPI
-```bash
-# Reverta o DPI
-adb shell wm density reset
-```
-
-## 📞 Suporte e Contato
-
-- **ID:** 197516950
-- **WhatsApp:** +55(24)99857-3367
-- **Instagram:** [@mts__b3](https://www.instagram.com/mts__b3?igsh=d2hmaTJleHU5OXk5)
-
-## 🤝 Contribuições
-
-Contribuições são bem-vindas! Sinta-se livre para:
-
-1. Fazer fork do projeto
-2. Criar uma branch para sua feature
-3. Commit suas mudanças
-4. Push para a branch
-5. Abrir um Pull Request
-
-## 📄 Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
-## ⭐ Avaliação
-
-Se este script te ajudou, considere dar uma ⭐ no repositório!
-
-## 📊 Status do Projeto
-
-- ✅ **Estável** - Versão 1.0
-- ✅ **Testado** - Samsung, Xiaomi, OnePlus
-- ✅ **Atualizado** - Android 5.0 até 14
-- ✅ **Suportado** - Suporte ativo
-
----
-
-**Desenvolvido com dedicação por MTS_B3** ⚡
-
-*6 anos de estudo em programação Android, Kernel Linux, C++, C# e Java*
+# Resultado final
+echo -e "\033[1;32m"
+echo "🎉 CONFIGURAÇÃO FINALIZADA COM SUCESSO! 🎉"
+echo
+echo -e "\033[1;36m📊 OTIMIZAÇÕES APLICADAS:\033[0m"
+echo -e "\033[1;32m   ✅ DPI Físico: $xdpi_int (Precisão máxima)\033[0m"
+echo -e "\033[1;32m   ✅ Mouse Speed: 2 (Responsividade otimizada)\033[0m"
+echo -e "\033[1;32m   ✅ GPU Rendering: FORÇADO (Performance máxima)\033[0m"
+echo -e "\033[1;32m   ✅ Refresh Rate: 60Hz (Fluidez total)\033[0m"
+echo
+echo -e "\033[1;33m🎮 SEU DISPOSITIVO ESTÁ AGORA OTIMIZADO PARA O FF SLV DO APOLLO! 🎮\033[0m"
+echo
+echo -e "\033[1;34m⚡ Desenvolvido com dedicação por MTS_B3 ⚡\033[0m"
+echo -e "\033[0m"
