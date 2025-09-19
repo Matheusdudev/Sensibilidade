@@ -26,15 +26,15 @@ Desenvolvido após **6 anos de estudo** em programação Android, Kernel Linux, 
 
 1. **Termux** instalado no Android
 2. **Depuração USB** habilitada
-3. **Depuração Wi-Fi ouCabo USB** para conexão PC/Android
+3. **Depuração Wi-Fi ou Cabo USB** para conexão PC/Android
 4. **ADB** instalado no PC ou Termux
 
 ## 🛠️ Instalação no Termux
 
 ### 1. Instalar Termux
 ```bash
-# Baixe do F-Droid (recomendado) ou Google Play Store
-# https://f-droid.org/packages/com.termux/
+# Baixe do F-Droid (recomendado)
+# https://f-droid.org/repo/com.termux_1022.apk
 ```
 
 ### 2. Instalar ADB
