@@ -58,6 +58,7 @@ adb devices
 ```bash
 # Baixe o Script
 wget https://github.com/Matheusdudev/Sensibilidade.zip
+
 #Descompacte
 unzip Sensibilidade.zip
 # Entre na pasta
