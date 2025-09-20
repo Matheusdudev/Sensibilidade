@@ -61,6 +61,7 @@ wget https://github.com/Matheusdudev/Sensibilidade/archive/refs/heads/main.zip
 
 #Descompacte
 unzip main.zip
+
 # Entre na pasta
 cd Sensibilidade-main
 
