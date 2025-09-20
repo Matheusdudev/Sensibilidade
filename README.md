@@ -2,13 +2,13 @@
 # MTS_SENSI.sh 🎮
 
 
-**Script de otimização Android para máxima precisão em jogos**
+**Script de otimização Android para máxima precisão em jogos especialmente o Free Fire**
 
 Desenvolvido após **6 anos de estudo** em programação Android, Kernel Linux, C++, C# e Java. Este script configura automaticamente a **sensibilidade perfeita** para dispositivos Android, eliminando tremores e maximizando a precisão em jogos.
 
 ## 🚀 Recursos
 
-- ✅ **DPI Físico Automático** - Detecta e aplica o DPI real da tela
+- ✅ **Simula a precisão dos emuladores** - aplica as melhores configurações da tela
 - ✅ **Mouse Speed Otimizado** - Configuração ideal para responsividade
 - ✅ **GPU Rendering Forçado** - Performance máxima em jogos
 - ✅ **60Hz Refresh Rate** - Fluidez total
@@ -35,8 +35,8 @@ Desenvolvido após **6 anos de estudo** em programação Android, Kernel Linux, 
 ```bash
 # Baixe do F-Droid (recomendado)
 # https://f-droid.org/repo/com.termux_1022.apk
-```
 
+```
 ### 2. Instalar ADB
 ```bash
 # Atualize os repositórios
@@ -53,6 +53,7 @@ adb devices
 # Deve aparecer algo como:
 #List of devices attached
 # ABC123DEF456    device
+
 ```
 ### 4. Baixar e Instalar MTS_SENSI.sh
 ```bash
