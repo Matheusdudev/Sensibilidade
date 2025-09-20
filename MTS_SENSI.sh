@@ -62,7 +62,15 @@ if [ "$adb_status" != "device" ]; then
 fi
 
 # Obtém DPI físico silenciosamente
-dpi_output=$(adb shell dumpsys input | grep dpi)
+dpi_output=$(adb shell dumpsys display | grep -iE 'xdpi' | head -n1 | grep -oE '[0-9]+(\.[0-9]+)?' | cut -d. -f1)
+
+# verifica se achou valor
+if [ -z "$dpi" ]; then
+    echo "Erro: DPI física (xdpi) não encontrada."
+    exit 1
+fi
+
+echo "DPI detectada: $dpi"
 if [ -z "$dpi_output" ]; then
     echo -e "\033[1;31m❌ ERRO: Não foi possível obter DPI\033[0m"
     exit 1
